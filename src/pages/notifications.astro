@@ -1,0 +1,157 @@
+---
+/**
+ * Notification mockup — "phone reveal" for the Real Estate ad.
+ * Script: Agent wraps up an open house, drives home. Checks phone.
+ * Tagline: UWC: your best pitch, 24/7.
+ */
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Notifications — Trailmark Realty Group</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            gold: '#D4A843',
+            navy: '#1B2A4A',
+            dark: '#0F1520',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="bg-dark min-h-screen text-white">
+  <!-- Status Bar Mockup -->
+  <div class="flex items-center justify-between px-6 py-2 text-xs text-white/60">
+    <span>5:45 PM</span>
+    <div class="flex items-center gap-1"><span>5G</span><span>📶</span><span>🔋 44%</span></div>
+  </div>
+
+  <!-- App Header -->
+  <div class="px-6 pt-4 pb-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-sm text-white/50">Good evening</p>
+        <h1 class="text-2xl font-bold">Trailmark Realty Group</h1>
+      </div>
+      <div class="relative">
+        <div class="w-10 h-10 rounded-full bg-gold/20 flex items-center justify-center text-lg">🏠</div>
+        <div class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-red-500 flex items-center justify-center text-[10px] font-bold">6</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Summary Cards -->
+  <div class="px-6 grid grid-cols-3 gap-3 mb-6">
+    <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+      <p class="text-2xl font-bold text-gold">2</p>
+      <p class="text-[10px] text-white/50 mt-1">New Leads</p>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+      <p class="text-2xl font-bold text-green-400">1</p>
+      <p class="text-[10px] text-white/50 mt-1">Showing Request</p>
+    </div>
+    <div class="bg-white/5 border border-white/10 rounded-xl p-3 text-center">
+      <p class="text-2xl font-bold text-blue-400">3</p>
+      <p class="text-[10px] text-white/50 mt-1">AI Chats</p>
+    </div>
+  </div>
+
+  <!-- Timeline -->
+  <div class="px-6">
+    <h2 class="text-sm font-semibold text-white/40 uppercase tracking-wider mb-4">While you were away</h2>
+    <div class="space-y-3">
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center text-sm">🏡</div>
+            <div>
+              <p class="text-sm font-medium">New lead: first-time buyers, $350K budget</p>
+              <p class="text-xs text-white/40">North End · pre-qualified · ready to tour</p>
+            </div>
+          </div>
+          <span class="text-[10px] text-white/30">8m ago</span>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-sm">💬</div>
+            <div>
+              <p class="text-sm font-medium">AI walked them through 3 neighborhoods</p>
+              <p class="text-xs text-white/40">They narrowed to 2 · North End & Augusta Road</p>
+            </div>
+          </div>
+          <span class="text-[10px] text-white/30">8m ago</span>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-gold/20 flex items-center justify-center text-sm">📅</div>
+            <div>
+              <p class="text-sm font-medium">Showing request: 88 Oakwood Drive</p>
+              <p class="text-xs text-white/40">Saturday 11am · confirmed availability</p>
+            </div>
+          </div>
+          <span class="text-[10px] text-white/30">20m ago</span>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-blue-500/20 flex items-center justify-center text-sm">💬</div>
+            <div>
+              <p class="text-sm font-medium">AI answered "What are closing costs in SC?"</p>
+              <p class="text-xs text-white/40">Broke down buyer costs · visitor saved the page</p>
+            </div>
+          </div>
+          <span class="text-[10px] text-white/30">35m ago</span>
+        </div>
+      </div>
+
+      <div class="bg-white/5 border border-white/10 rounded-xl p-4">
+        <div class="flex items-start justify-between">
+          <div class="flex items-center gap-3">
+            <div class="w-8 h-8 rounded-full bg-green-500/20 flex items-center justify-center text-sm">📋</div>
+            <div>
+              <p class="text-sm font-medium">Seller inquiry: "What's my home worth?"</p>
+              <p class="text-xs text-white/40">Captured address + contact · 4BR Colonial, Simpsonville</p>
+            </div>
+          </div>
+          <span class="text-[10px] text-white/30">1h ago</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Summary -->
+  <div class="px-6 py-8 mt-4">
+    <div class="bg-gold/10 border border-gold/20 rounded-xl p-5 text-center">
+      <p class="text-gold text-sm font-medium">Your next deal started while you were closing the last one.</p>
+      <p class="text-white/50 text-xs mt-1">2 leads · 1 showing · 3 AI conversations</p>
+    </div>
+  </div>
+
+  <!-- UWC Branding -->
+  <div class="fixed bottom-0 left-0 right-0 bg-gradient-to-t from-dark via-dark/80 to-transparent py-6 px-6">
+    <div class="flex items-center justify-between">
+      <div>
+        <p class="text-white text-lg font-bold">UWC</p>
+        <p class="text-gold text-sm">Your best pitch, 24/7.</p>
+      </div>
+      <p class="text-white/30 text-xs">upstate-web.com</p>
+    </div>
+  </div>
+</body>
+</html>
