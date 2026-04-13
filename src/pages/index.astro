@@ -1,0 +1,177 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/config'
+---
+
+<Layout>
+  <!-- Hero -->
+  <section class="relative h-[70vh] flex items-center overflow-hidden">
+    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80" alt="Greenville homes" class="absolute inset-0 w-full h-full object-cover brightness-[0.3]" loading="eager" />
+    <div class="relative px-6 mx-auto max-w-6xl">
+      <div class="max-w-xl">
+        <p class="text-gold text-sm uppercase tracking-[0.2em] mb-3">Greenville, SC Real Estate</p>
+        <h1 class="text-4xl md:text-6xl text-white leading-tight" style="font-family: Georgia, serif;">Find your place<br/>in <span class="text-gold">Greenville.</span></h1>
+        <p class="mt-4 text-lg text-white/80">120+ homes sold. 12 years local. Whether you're buying, selling, or investing — I'll guide you through every step.</p>
+        <div class="mt-8 flex flex-col sm:flex-row gap-3">
+          <a href="#contact" class="rounded-lg bg-gold px-6 py-3 text-center font-medium text-navy hover:bg-gold-light transition-colors">Schedule a Consultation</a>
+          <a href="#listings" class="rounded-lg border border-white/30 px-6 py-3 text-center font-medium text-white hover:bg-white/10 transition-colors">View Listings</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- AI Ask -->
+  <section class="bg-navy/5 py-6 px-6">
+    <div class="mx-auto max-w-xl">
+      <div class="flex gap-2">
+        <input id="ai-ask" type="text" placeholder="What's the market like in Augusta Road? Best neighborhoods for families? How's downtown inventory?" class="flex-1 rounded-lg border border-navy/20 bg-white px-5 py-3 text-sm placeholder:text-muted focus:border-navy focus:outline-none" />
+        <button id="ai-send" class="rounded-lg bg-navy px-5 py-3 text-sm font-medium text-white hover:bg-navy-dark transition-colors">Ask</button>
+      </div>
+      <div id="ai-response" class="hidden mt-3 rounded-xl bg-white border border-navy/10 p-4 text-sm leading-relaxed"></div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <section class="py-12 px-6 bg-white">
+    <div class="mx-auto max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+      {STATS.map((s) => (
+        <div>
+          <p class="text-3xl font-bold text-navy">{s.value}</p>
+          <p class="text-sm text-muted mt-1">{s.label}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Featured Listings -->
+  <section id="listings" class="py-20 px-6">
+    <div class="mx-auto max-w-6xl">
+      <h2 class="text-3xl font-bold text-center mb-2">Featured Listings</h2>
+      <p class="text-center text-muted text-sm mb-10">Hand-picked properties in the Greenville area.</p>
+      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        {LISTINGS.map((l) => (
+          <div class="group rounded-xl border border-navy/10 bg-white overflow-hidden hover:shadow-lg transition-shadow">
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img src={l.image} alt={l.address} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
+              <span class={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded ${l.status === 'Active' ? 'bg-green-500 text-white' : 'bg-gold text-navy'}`}>{l.status}</span>
+            </div>
+            <div class="p-4">
+              <p class="text-lg font-bold text-navy">{l.price}</p>
+              <p class="text-sm text-charcoal mt-1">{l.address}</p>
+              <p class="text-xs text-muted mt-2">{l.beds} bed &middot; {l.baths} bath &middot; {l.sqft} sqft</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Neighborhoods -->
+  <section id="neighborhoods" class="py-20 px-6 bg-white">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-3xl font-bold text-center mb-2">Know Your Neighborhoods</h2>
+      <p class="text-center text-muted text-sm mb-10">Every area has a personality. Here's what you need to know.</p>
+      <div class="grid md:grid-cols-2 gap-5">
+        {NEIGHBORHOODS.map((n) => (
+          <div class="rounded-xl border border-navy/10 bg-slate p-6">
+            <div class="flex items-start justify-between mb-2">
+              <h3 class="text-lg font-semibold text-navy">{n.name}</h3>
+              <span class="text-xs bg-navy/10 text-navy px-2 py-1 rounded-full">{n.vibe}</span>
+            </div>
+            <p class="text-sm text-muted leading-relaxed">{n.description}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 px-6">
+    <div class="mx-auto max-w-4xl grid md:grid-cols-2 gap-10 items-center">
+      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Ryan Cole" class="rounded-xl aspect-[4/5] object-cover" loading="lazy" />
+      <div>
+        <h2 class="text-3xl font-bold mb-4">About Ryan</h2>
+        <p class="text-muted leading-relaxed mb-4">
+          I've lived in Greenville for 20 years and sold homes here for 12. I know every neighborhood, every school district, and every hidden gem. When you work with me, you get someone who knows this market — not just the data, but the feel of it.
+        </p>
+        <p class="text-muted leading-relaxed mb-4">
+          For buyers, I find homes before they hit the market. For sellers, I price right, stage smart, and close fast — average 18 days on market.
+        </p>
+        <p class="text-muted leading-relaxed mb-6">
+          I'm not a team — I'm one agent who gives every client my full attention. You'll always talk to me, never an assistant.
+        </p>
+        <a href="#contact" class="inline-block rounded-lg bg-navy px-5 py-2.5 font-medium text-white hover:bg-navy-dark transition-colors">Let's Talk</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials -->
+  <section class="py-20 px-6 bg-white">
+    <div class="mx-auto max-w-4xl">
+      <h2 class="text-3xl font-bold text-center mb-10">What Clients Say</h2>
+      <div class="grid md:grid-cols-3 gap-5">
+        {TESTIMONIALS.map((t) => (
+          <div class="rounded-xl border border-navy/10 bg-slate p-6">
+            <p class="text-sm italic leading-relaxed">"{t.quote}"</p>
+            <div class="mt-4 pt-3 border-t border-navy/10">
+              <p class="text-sm font-medium">{t.author}</p>
+              <p class="text-xs text-muted">{t.context}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="py-20 px-6 bg-navy">
+    <div class="mx-auto max-w-lg text-center">
+      <h2 class="text-3xl font-bold text-white mb-3">Ready to make a move?</h2>
+      <p class="text-white/70 text-sm mb-8">Whether you're buying, selling, or just exploring — let's have a conversation. No pressure, no obligation.</p>
+      <form id="contact-form" class="space-y-4 text-left">
+        <div class="grid sm:grid-cols-2 gap-4">
+          <input type="text" name="name" placeholder="Your name" required class="w-full rounded-lg bg-white/10 border border-white/20 px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-gold focus:outline-none" />
+          <input type="email" name="email" placeholder="Email" required class="w-full rounded-lg bg-white/10 border border-white/20 px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-gold focus:outline-none" />
+        </div>
+        <input type="tel" name="phone" placeholder="Phone (optional)" class="w-full rounded-lg bg-white/10 border border-white/20 px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-gold focus:outline-none" />
+        <select name="interest" class="w-full rounded-lg bg-white/10 border border-white/20 px-4 py-2.5 text-sm text-white focus:border-gold focus:outline-none">
+          <option value="" class="text-charcoal">I'm interested in...</option>
+          <option value="buying" class="text-charcoal">Buying a home</option>
+          <option value="selling" class="text-charcoal">Selling my home</option>
+          <option value="investing" class="text-charcoal">Investment properties</option>
+          <option value="just-looking" class="text-charcoal">Just exploring the market</option>
+        </select>
+        <textarea name="message" rows="3" placeholder="Tell me about what you're looking for..." class="w-full rounded-lg bg-white/10 border border-white/20 px-4 py-2.5 text-sm text-white placeholder:text-white/50 focus:border-gold focus:outline-none"></textarea>
+        <button type="submit" class="w-full rounded-lg bg-gold px-6 py-3 font-medium text-navy hover:bg-gold-light transition-colors">Send Message</button>
+        <div id="form-status" class="hidden rounded-lg p-3 text-center text-sm"></div>
+      </form>
+    </div>
+  </section>
+
+  <script>
+    document.getElementById('contact-form')?.addEventListener('submit', (e) => {
+      e.preventDefault()
+      const status = document.getElementById('form-status')!
+      status.textContent = 'Thanks! I\'ll get back to you within a few hours. Looking forward to connecting.'
+      status.className = 'rounded-lg bg-gold/20 border border-gold/30 p-3 text-center text-sm text-gold'
+      ;(e.target as HTMLFormElement).querySelectorAll('input, select, textarea, button').forEach(el => (el as HTMLInputElement).disabled = true)
+    })
+
+    const aiInput = document.getElementById('ai-ask') as HTMLInputElement
+    const aiSend = document.getElementById('ai-send')!
+    const aiResponse = document.getElementById('ai-response')!
+    async function askAI() {
+      const text = aiInput.value.trim()
+      if (!text) return
+      aiResponse.textContent = 'Checking...'
+      aiResponse.classList.remove('hidden')
+      try {
+        const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message: text }) })
+        const data = await res.json()
+        aiResponse.textContent = data.reply || 'Not sure — reach out and I\'ll get you a real answer!'
+      } catch { aiResponse.textContent = 'Something went wrong. Call me at (864) 555-7482!' }
+    }
+    aiSend.addEventListener('click', askAI)
+    aiInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') askAI() })
+  </script>
+</Layout>

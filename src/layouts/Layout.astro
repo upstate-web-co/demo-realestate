@@ -1,0 +1,62 @@
+---
+import '../styles/global.css'
+import { SITE } from '../lib/config'
+interface Props { title?: string; description?: string }
+const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC real estate agent. Buying, selling, investing. Local expert with 120+ homes sold.` } = Astro.props
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{title}</title>
+  <meta name="description" content={description} />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+</head>
+<body class="bg-slate text-charcoal antialiased">
+  <nav class="sticky top-0 z-50 bg-navy text-white">
+    <div class="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
+      <a href="/" class="text-lg font-semibold"><span class="text-gold">Ryan Cole</span> Real Estate</a>
+      <div class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#listings" class="text-white/70 hover:text-gold transition-colors">Listings</a>
+        <a href="#neighborhoods" class="text-white/70 hover:text-gold transition-colors">Neighborhoods</a>
+        <a href="#about" class="text-white/70 hover:text-gold transition-colors">About</a>
+        <a href="#contact" class="text-white/70 hover:text-gold transition-colors">Contact</a>
+        <a href="#contact" class="rounded-lg bg-gold px-5 py-2 font-medium text-navy hover:bg-gold-light transition-colors">Get in Touch</a>
+      </div>
+    </div>
+  </nav>
+  <main><slot /></main>
+
+  <!-- Demo Disclaimer -->
+  <div class="bg-yellow-50 border-y border-yellow-200 py-3 px-6 text-center">
+    <p class="text-xs text-yellow-800">
+      <strong>Portfolio Demo</strong> — This is a sample site built by <a href="https://upstate-web.com" class="underline hover:text-yellow-900">Upstate Web Co</a> to showcase what we build for this industry. This is not a real business.
+    </p>
+  </div>
+
+  <footer class="bg-navy text-white/60">
+    <div class="mx-auto max-w-6xl px-6 py-10">
+      <div class="grid md:grid-cols-3 gap-8">
+        <div>
+          <p class="text-lg font-semibold text-white"><span class="text-gold">Ryan Cole</span> Real Estate</p>
+          <p class="text-sm mt-2">{SITE.tagline}</p>
+          <p class="text-xs mt-1">{SITE.license}</p>
+        </div>
+        <div class="text-sm">
+          <p class="font-medium text-white mb-2">Contact</p>
+          <p><a href={`tel:${SITE.phone}`} class="hover:text-gold">{SITE.phone}</a></p>
+          <p><a href={`mailto:${SITE.email}`} class="hover:text-gold">{SITE.email}</a></p>
+        </div>
+        <div class="text-sm">
+          <p class="font-medium text-white mb-2">Areas Served</p>
+          <p>Greenville, Simpsonville, Mauldin, Travelers Rest, Greer, Taylors</p>
+        </div>
+      </div>
+      <div class="mt-8 pt-6 border-t border-white/10 text-center text-xs">
+        &copy; {new Date().getFullYear()} {SITE.name}. Built by <a href="https://upstate-web.com" class="text-gold hover:underline">Upstate Web Co</a>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>
