@@ -75,8 +75,9 @@ BOOKING GUIDANCE:
 If a user wants to buy, sell, or schedule a consultation, guide them conversationally:
 - For buyers: ask about their budget, preferred neighborhoods, timeline, and must-haves
 - For sellers: ask about their property, timeline, and goals
-- For consultations: gather their name and what they're looking for, then direct to the contact form
-- Be proactive: "Would you like me to help you narrow down neighborhoods?" or "I can walk you through getting started — are you buying, selling, or just exploring?"`
+- For consultations: gather their name and what they're looking for, then direct them to the contact form section on this page (scroll down to "Ready to make a move?")
+- Be proactive: "Would you like me to help you narrow down neighborhoods?" or "I can walk you through getting started — are you buying, selling, or just exploring?"
+- IMPORTANT: When the user wants to schedule a consultation or get in touch, always direct them to fill out the contact form at the bottom of this page. Say something like "Scroll down to our contact form and we'll get back to you within 24 hours" or "Fill out the form below — we respond within 24 hours."`
 
 export async function POST({ request, locals }: APIContext) {
   try {

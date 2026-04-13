@@ -51,9 +51,9 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
       <h2 class="text-3xl font-bold text-center mb-2">Featured Listings</h2>
       <p class="text-center text-muted text-sm mb-10">Sample listings to illustrate what we do.</p>
       <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {LISTINGS.map((l) => (
+        {LISTINGS.map((l, i) => (
           <div class="group rounded-xl border border-navy/10 bg-white overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="relative aspect-[4/3] overflow-hidden">
+            <div class="relative aspect-[4/3] overflow-hidden cursor-pointer" data-listing-toggle={i}>
               <img src={l.image} alt={l.address} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
               <span class="absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded bg-navy/70 text-white">{l.status}</span>
             </div>
@@ -61,6 +61,20 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
               <p class="text-lg font-bold text-navy">{l.price}</p>
               <p class="text-sm text-charcoal mt-1">{l.address}</p>
               <p class="text-xs text-muted mt-2">{l.beds} bed &middot; {l.baths} bath &middot; {l.sqft} sqft</p>
+              <button class="mt-2 text-xs text-navy/70 hover:text-navy transition-colors flex items-center gap-1 cursor-pointer" data-listing-toggle={i}>
+                View details <span class="transition-transform" data-listing-arrow={i}>&#9662;</span>
+              </button>
+              <div class="hidden mt-3 pt-3 border-t border-navy/10" data-listing-detail={i}>
+                <p class="text-xs text-muted leading-relaxed mb-2">{l.description}</p>
+                <p class="text-xs text-muted mb-1"><span class="font-medium text-charcoal">Neighborhood:</span> {l.neighborhood}</p>
+                <p class="text-xs text-muted mb-2"><span class="font-medium text-charcoal">Built:</span> {l.yearBuilt}</p>
+                <div class="flex flex-wrap gap-1 mb-3">
+                  {l.features.map((f) => (
+                    <span class="text-[10px] bg-navy/5 text-navy/70 px-2 py-0.5 rounded-full">{f}</span>
+                  ))}
+                </div>
+                <a href="#contact" class="block text-center rounded-lg bg-navy/10 text-navy text-xs font-medium py-2 hover:bg-navy/20 transition-colors">Schedule a Tour</a>
+              </div>
             </div>
           </div>
         ))}
@@ -151,6 +165,17 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
   </section>
 
   <script>
+    // Listing expand/collapse
+    document.querySelectorAll('[data-listing-toggle]').forEach(el => {
+      el.addEventListener('click', () => {
+        const idx = (el as HTMLElement).dataset.listingToggle
+        const detail = document.querySelector(`[data-listing-detail="${idx}"]`)
+        const arrow = document.querySelector(`[data-listing-arrow="${idx}"]`)
+        if (detail) detail.classList.toggle('hidden')
+        if (arrow) arrow.classList.toggle('rotate-180')
+      })
+    })
+
     document.getElementById('contact-form')?.addEventListener('submit', (e) => {
       e.preventDefault()
       const status = document.getElementById('form-status')!
