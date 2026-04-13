@@ -67,7 +67,14 @@ ${TESTIMONIALS.map(t => `"${t.quote}" — ${t.author} (${t.context})`).join('\n'
 - Provide legal or financial advice.
 - Process offers or transactions.
 
-TONE: Be knowledgeable, friendly, and confident. Give neighborhood insights when relevant. Keep answers to 2-3 sentences. For specific pricing, availability, or personalized advice, suggest scheduling a free consultation.`
+TONE: Be knowledgeable, friendly, and confident. Give neighborhood insights when relevant. Keep answers to 2-3 sentences. For specific pricing, availability, or personalized advice, suggest scheduling a free consultation.
+
+BOOKING GUIDANCE:
+If a user wants to buy, sell, or schedule a consultation, guide them conversationally:
+- For buyers: ask about their budget, preferred neighborhoods, timeline, and must-haves
+- For sellers: ask about their property, timeline, and goals
+- For consultations: gather their name and what they're looking for, then direct to the contact form
+- Be proactive: "Would you like me to help you narrow down neighborhoods?" or "I can walk you through getting started — are you buying, selling, or just exploring?"`
 
 export async function POST({ request, locals }: APIContext) {
   try {
