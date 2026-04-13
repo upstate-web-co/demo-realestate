@@ -2,7 +2,7 @@
 import '../styles/global.css'
 import { SITE } from '../lib/config'
 interface Props { title?: string; description?: string }
-const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC real estate agent. Buying, selling, investing. Local expert with 120+ homes sold.` } = Astro.props
+const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC real estate group. Buying, selling, investing. Local experts with 120+ homes sold.` } = Astro.props
 ---
 <!doctype html>
 <html lang="en">
@@ -11,12 +11,13 @@ const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
+  <meta name="robots" content="noindex, nofollow" />
   <link rel="preconnect" href="https://images.unsplash.com" />
 </head>
 <body class="bg-slate text-charcoal antialiased">
   <nav class="sticky top-0 z-50 bg-navy text-white">
     <div class="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-      <a href="/" class="text-lg font-semibold"><span class="text-gold">Ryan Cole</span> Real Estate</a>
+      <a href="/" class="text-lg font-semibold"><span class="text-gold">Trailmark</span> Realty Group</a>
       <div class="hidden md:flex items-center gap-6 text-sm">
         <a href="#listings" class="text-white/70 hover:text-gold transition-colors">Listings</a>
         <a href="#neighborhoods" class="text-white/70 hover:text-gold transition-colors">Neighborhoods</a>
@@ -31,7 +32,7 @@ const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC
   <!-- Demo Disclaimer -->
   <div class="bg-yellow-50 border-y border-yellow-200 py-3 px-6 text-center">
     <p class="text-xs text-yellow-800">
-      <strong>Portfolio Demo</strong> — This is a sample site built by <a href="https://upstate-web.com" class="underline hover:text-yellow-900">Upstate Web Co</a> to showcase what we build for this industry. This is not a real business.
+      <strong>Portfolio Demo</strong> — This is a fictional business created by <a href="https://upstate-web.com" class="underline hover:text-yellow-900">Upstate Web Co</a>. All names, addresses, property listings, and details are entirely fictional. Not a real real estate agency.
     </p>
   </div>
 
@@ -39,9 +40,8 @@ const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC
     <div class="mx-auto max-w-6xl px-6 py-10">
       <div class="grid md:grid-cols-3 gap-8">
         <div>
-          <p class="text-lg font-semibold text-white"><span class="text-gold">Ryan Cole</span> Real Estate</p>
+          <p class="text-lg font-semibold text-white"><span class="text-gold">Trailmark</span> Realty Group</p>
           <p class="text-sm mt-2">{SITE.tagline}</p>
-          <p class="text-xs mt-1">{SITE.license}</p>
         </div>
         <div class="text-sm">
           <p class="font-medium text-white mb-2">Contact</p>
