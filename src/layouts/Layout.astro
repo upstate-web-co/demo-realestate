@@ -2,7 +2,7 @@
 import '../styles/global.css'
 import { SITE } from '../lib/config'
 interface Props { title?: string; description?: string }
-const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC real estate group. Buying, selling, investing. Local experts with 120+ homes sold.` } = Astro.props
+const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC real estate agent. Buying, selling, investing. Local expert with 120+ homes sold.` } = Astro.props
 ---
 <!doctype html>
 <html lang="en">
@@ -11,16 +11,12 @@ const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>{title}</title>
   <meta name="description" content={description} />
-  <meta name="robots" content="noindex, nofollow" />
-  <meta property="og:title" content={title} />
-  <meta property="og:description" content={description} />
-  <meta property="og:image" content="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=80" />
   <link rel="preconnect" href="https://images.unsplash.com" />
 </head>
 <body class="bg-slate text-charcoal antialiased">
-  <nav class="sticky top-0 z-50 bg-navy text-white">
+  <nav id="main-nav" class="sticky top-0 z-50 bg-navy/95 backdrop-blur-md text-white transition-all duration-500">
     <div class="mx-auto max-w-6xl flex items-center justify-between px-6 py-4">
-      <a href="/" class="text-lg font-semibold"><span class="text-gold">Trailmark</span> Realty Group</a>
+      <a href="/" class="text-lg font-semibold"><span class="text-gold">Ryan Cole</span> Real Estate</a>
       <div class="hidden md:flex items-center gap-6 text-sm">
         <a href="#listings" class="text-white/70 hover:text-gold transition-colors">Listings</a>
         <a href="#neighborhoods" class="text-white/70 hover:text-gold transition-colors">Neighborhoods</a>
@@ -28,29 +24,14 @@ const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC
         <a href="#contact" class="text-white/70 hover:text-gold transition-colors">Contact</a>
         <a href="#contact" class="rounded-lg bg-gold px-5 py-2 font-medium text-navy hover:bg-gold-light transition-colors">Get in Touch</a>
       </div>
-      <button id="mobile-menu-btn" class="md:hidden text-white" aria-label="Open menu">
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/></svg>
-      </button>
     </div>
   </nav>
-
-  <!-- Mobile menu overlay -->
-  <div id="mobile-menu" class="hidden fixed inset-0 z-[60] flex-col items-center justify-center gap-6 bg-navy text-white">
-    <button id="mobile-menu-close" class="absolute top-4 right-6 text-white" aria-label="Close menu">
-      <svg class="w-7 h-7" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-    </button>
-    <a href="#listings" class="text-xl text-white/70 hover:text-gold transition-colors">Listings</a>
-    <a href="#neighborhoods" class="text-xl text-white/70 hover:text-gold transition-colors">Neighborhoods</a>
-    <a href="#about" class="text-xl text-white/70 hover:text-gold transition-colors">About</a>
-    <a href="#contact" class="text-xl text-white/70 hover:text-gold transition-colors">Contact</a>
-    <a href="#contact" class="mt-2 rounded-lg bg-gold px-6 py-3 text-lg font-medium text-navy hover:bg-gold-light transition-colors">Get in Touch</a>
-  </div>
   <main><slot /></main>
 
   <!-- Demo Disclaimer -->
   <div class="bg-yellow-50 border-y border-yellow-200 py-3 px-6 text-center">
     <p class="text-xs text-yellow-800">
-      <strong>Portfolio Demo</strong> — This is a fictional business created by <a href="https://upstate-web.com" class="underline hover:text-yellow-900">Upstate Web Co</a>. All names, addresses, property listings, and details are entirely fictional. Not a real real estate agency.
+      <strong>Portfolio Demo</strong> — This is a sample site built by <a href="https://upstate-web.com" class="underline hover:text-yellow-900">Upstate Web Co</a> to showcase what we build for this industry. This is not a real business.
     </p>
   </div>
 
@@ -58,8 +39,9 @@ const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC
     <div class="mx-auto max-w-6xl px-6 py-10">
       <div class="grid md:grid-cols-3 gap-8">
         <div>
-          <p class="text-lg font-semibold text-white"><span class="text-gold">Trailmark</span> Realty Group</p>
+          <p class="text-lg font-semibold text-white"><span class="text-gold">Ryan Cole</span> Real Estate</p>
           <p class="text-sm mt-2">{SITE.tagline}</p>
+          <p class="text-xs mt-1">{SITE.license}</p>
         </div>
         <div class="text-sm">
           <p class="font-medium text-white mb-2">Contact</p>
@@ -77,12 +59,17 @@ const { title = `${SITE.name} — ${SITE.tagline}`, description = `Greenville SC
     </div>
   </footer>
   <script>
-    const btn = document.getElementById('mobile-menu-btn');
-    const menu = document.getElementById('mobile-menu');
-    const close = document.getElementById('mobile-menu-close');
-    btn?.addEventListener('click', () => menu?.classList.replace('hidden', 'flex'));
-    close?.addEventListener('click', () => menu?.classList.replace('flex', 'hidden'));
-    menu?.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu?.classList.replace('flex', 'hidden')));
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible') })
+    }, { threshold: 0.08, rootMargin: '-20px' })
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el))
+
+    const nav = document.getElementById('main-nav')
+    if (nav) {
+      window.addEventListener('scroll', () => {
+        nav.classList.toggle('nav-scrolled', window.scrollY > 40)
+      }, { passive: true })
+    }
   </script>
 </body>
 </html>

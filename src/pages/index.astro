@@ -6,27 +6,42 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
 <Layout>
   <!-- Hero -->
   <section class="relative h-[70vh] flex items-center overflow-hidden">
-    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1200&q=75&auto=format" alt="Greenville homes" class="absolute inset-0 w-full h-full object-cover brightness-[0.3]" loading="eager" width="1200" height="800" fetchpriority="high" />
-    <div class="relative px-6 mx-auto max-w-6xl">
+    <img src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1600&q=80" alt="Greenville homes" class="absolute inset-0 w-full h-full object-cover brightness-[0.3]" loading="eager" />
+    <div class="relative px-6 mx-auto max-w-6xl grid md:grid-cols-2 gap-10 items-center">
       <div class="max-w-xl">
         <p class="text-gold text-sm uppercase tracking-[0.2em] mb-3">Greenville, SC Real Estate</p>
         <h1 class="text-4xl md:text-6xl text-white leading-tight" style="font-family: Georgia, serif;">Find your place<br/>in <span class="text-gold">Greenville.</span></h1>
-        <p class="mt-4 text-lg text-white/80">120+ homes sold. 12 years local. Whether you're buying, selling, or investing — we'll guide you through every step.</p>
+        <p class="mt-4 text-lg text-white/80">120+ homes sold. 12 years local. Whether you're buying, selling, or investing — I'll guide you through every step.</p>
         <div class="mt-8 flex flex-col sm:flex-row gap-3">
           <a href="#contact" class="rounded-lg bg-gold px-6 py-3 text-center font-medium text-navy hover:bg-gold-light transition-colors">Schedule a Consultation</a>
           <a href="#listings" class="rounded-lg border border-white/30 px-6 py-3 text-center font-medium text-white hover:bg-white/10 transition-colors">View Listings</a>
         </div>
       </div>
+      <div class="hidden md:block">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=500&q=80" alt="Ryan Cole" class="rounded-2xl aspect-[3/4] object-cover border-4 border-gold/20 shadow-2xl mx-auto max-w-xs" loading="eager" />
+      </div>
     </div>
   </section>
 
-  <!-- AI Chat -->
-  <section class="bg-navy/5 py-6 px-6">
+  <!-- Inline AI Chat -->
+  <section class="bg-navy/5 py-8 px-6">
     <div class="mx-auto max-w-xl">
-      <div id="chat-container" class="rounded-xl border border-navy/20 bg-white overflow-hidden">
+      <div class="flex items-center gap-3 mb-4">
+        <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=200&q=80" alt="Ryan Cole" class="w-12 h-12 rounded-full object-cover border-2 border-navy/20 shadow-sm" />
+        <div>
+          <p class="text-sm font-semibold text-navy">Ask Ryan</p>
+          <p class="text-xs text-muted">Market, neighborhoods, buying, selling</p>
+        </div>
+      </div>
+      <div class="rounded-xl border border-navy/12 bg-white overflow-hidden">
         <div id="chat-messages" class="hidden max-h-80 overflow-y-auto px-4 pt-4 pb-2 space-y-3"></div>
-        <div id="chat-input-bar" class="flex gap-2 p-3">
-          <input id="chat-input" type="text" placeholder="What's the market like downtown? Best neighborhoods for families? How's inventory looking?" class="flex-1 rounded-lg border border-navy/20 bg-navy/5 px-5 py-2.5 text-sm placeholder:text-muted focus:border-navy focus:outline-none" />
+        <div id="chat-quick" class="flex gap-2 px-3 py-2.5 overflow-x-auto border-b border-navy/8">
+          <button class="chat-q shrink-0 rounded-full border border-navy/15 bg-navy/5 px-3 py-1.5 text-xs font-medium text-navy hover:bg-navy/10 transition-colors" data-msg="What's the market like in downtown Greenville?">Downtown</button>
+          <button class="chat-q shrink-0 rounded-full border border-navy/15 bg-navy/5 px-3 py-1.5 text-xs font-medium text-navy hover:bg-navy/10 transition-colors" data-msg="Best neighborhoods for families?">Families</button>
+          <button class="chat-q shrink-0 rounded-full border border-navy/15 bg-navy/5 px-3 py-1.5 text-xs font-medium text-navy hover:bg-navy/10 transition-colors" data-msg="I'm a first-time buyer. Where do I start?">First-Time</button>
+        </div>
+        <div class="flex gap-2 p-3">
+          <input id="chat-input" type="text" placeholder="Ask about neighborhoods, market, listings..." maxlength="500" autocomplete="off" class="flex-1 rounded-lg border border-navy/15 bg-slate px-5 py-2.5 text-sm text-charcoal placeholder:text-muted focus:border-navy focus:outline-none" />
           <button id="chat-send" class="rounded-lg bg-navy px-5 py-2.5 text-sm font-medium text-white hover:bg-navy-dark transition-colors">Ask</button>
         </div>
       </div>
@@ -38,7 +53,7 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
     <div class="mx-auto max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
       {STATS.map((s) => (
         <div>
-          <p class="text-3xl font-bold text-navy">{s.value}</p>
+          <p class="text-3xl font-bold text-navy counter" data-value={s.value}>{s.value}</p>
           <p class="text-sm text-muted mt-1">{s.label}</p>
         </div>
       ))}
@@ -48,33 +63,19 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
   <!-- Featured Listings -->
   <section id="listings" class="py-20 px-6">
     <div class="mx-auto max-w-6xl">
-      <h2 class="text-3xl font-bold text-center mb-2">Featured Listings</h2>
-      <p class="text-center text-muted text-sm mb-10">Sample listings to illustrate what we do.</p>
-      <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
-        {LISTINGS.map((l, i) => (
-          <div class="group rounded-xl border border-navy/10 bg-white overflow-hidden hover:shadow-lg transition-shadow">
-            <div class="relative aspect-[4/3] overflow-hidden cursor-pointer" data-listing-toggle={i}>
+      <h2 class="reveal text-3xl font-bold text-center mb-2">Featured Listings</h2>
+      <p class="text-center text-muted text-sm mb-10">Hand-picked properties in the Greenville area.</p>
+      <div class="grid sm:grid-cols-2 gap-5">
+        {LISTINGS.map((l) => (
+          <div class="group rounded-xl border border-navy/10 bg-white overflow-hidden hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+            <div class="relative aspect-[4/3] overflow-hidden">
               <img src={l.image} alt={l.address} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" loading="lazy" />
-              <span class="absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded bg-navy/70 text-white">{l.status}</span>
+              <span class={`absolute top-3 left-3 text-xs font-medium px-2 py-1 rounded ${l.status === 'Active' ? 'bg-green-500 text-white' : 'bg-gold text-navy'}`}>{l.status}</span>
             </div>
             <div class="p-4">
               <p class="text-lg font-bold text-navy">{l.price}</p>
               <p class="text-sm text-charcoal mt-1">{l.address}</p>
               <p class="text-xs text-muted mt-2">{l.beds} bed &middot; {l.baths} bath &middot; {l.sqft} sqft</p>
-              <button class="mt-2 text-xs text-navy/70 hover:text-navy transition-colors flex items-center gap-1 cursor-pointer" data-listing-toggle={i}>
-                View details <span class="transition-transform" data-listing-arrow={i}>&#9662;</span>
-              </button>
-              <div class="hidden mt-3 pt-3 border-t border-navy/10" data-listing-detail={i}>
-                <p class="text-xs text-muted leading-relaxed mb-2">{l.description}</p>
-                <p class="text-xs text-muted mb-1"><span class="font-medium text-charcoal">Neighborhood:</span> {l.neighborhood}</p>
-                <p class="text-xs text-muted mb-2"><span class="font-medium text-charcoal">Built:</span> {l.yearBuilt}</p>
-                <div class="flex flex-wrap gap-1 mb-3">
-                  {l.features.map((f) => (
-                    <span class="text-[10px] bg-navy/5 text-navy/70 px-2 py-0.5 rounded-full">{f}</span>
-                  ))}
-                </div>
-                <a href="#contact" class="block text-center rounded-lg bg-navy/10 text-navy text-xs font-medium py-2 hover:bg-navy/20 transition-colors">Schedule a Tour</a>
-              </div>
             </div>
           </div>
         ))}
@@ -85,46 +86,29 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
   <!-- Neighborhoods -->
   <section id="neighborhoods" class="py-20 px-6 bg-white">
     <div class="mx-auto max-w-4xl">
-      <h2 class="text-3xl font-bold text-center mb-2">Know Your Neighborhoods</h2>
+      <h2 class="reveal text-3xl font-bold text-center mb-2">Know Your Neighborhoods</h2>
       <p class="text-center text-muted text-sm mb-10">Every area has a personality. Here's what you need to know.</p>
       <div class="grid md:grid-cols-2 gap-5">
         {NEIGHBORHOODS.map((n) => (
-          <div class="rounded-xl border border-navy/10 bg-slate p-6">
-            <div class="flex items-start justify-between mb-2">
-              <h3 class="text-lg font-semibold text-navy">{n.name}</h3>
-              <span class="text-xs bg-navy/10 text-navy px-2 py-1 rounded-full">{n.vibe}</span>
+          <div class="rounded-xl border border-navy/10 bg-slate overflow-hidden transition-all duration-300 hover:-translate-y-1 hover:shadow-md hover:border-navy/20">
+            <img src={n.image} alt={n.name} class="w-full h-36 object-cover" loading="lazy" />
+            <div class="p-5">
+              <div class="flex items-start justify-between mb-2">
+                <h3 class="text-lg font-semibold text-navy">{n.name}</h3>
+                <span class="text-xs bg-navy/10 text-navy px-2 py-1 rounded-full">{n.vibe}</span>
+              </div>
+              <p class="text-sm text-muted leading-relaxed">{n.description}</p>
             </div>
-            <p class="text-sm text-muted leading-relaxed">{n.description}</p>
           </div>
         ))}
       </div>
     </div>
   </section>
 
-  <!-- About -->
-  <section id="about" class="py-20 px-6">
-    <div class="mx-auto max-w-4xl grid md:grid-cols-2 gap-10 items-center">
-      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Trailmark Realty Group team" class="rounded-xl aspect-[4/5] object-cover" loading="lazy" />
-      <div>
-        <h2 class="text-3xl font-bold mb-4">About Trailmark Realty</h2>
-        <p class="text-muted leading-relaxed mb-4">
-          With over 12 years of experience in the Greenville market and 120+ homes sold, our team knows every neighborhood, every school district, and every hidden gem. When you work with us, you get a team that knows this market — not just the data, but the feel of it.
-        </p>
-        <p class="text-muted leading-relaxed mb-4">
-          For buyers, we find homes before they hit the market. For sellers, we price right, stage smart, and close fast — average 18 days on market.
-        </p>
-        <p class="text-muted leading-relaxed mb-6">
-          We're a small, dedicated team that gives every client personal attention. Licensed in South Carolina.
-        </p>
-        <a href="#contact" class="inline-block rounded-lg bg-navy px-5 py-2.5 font-medium text-white hover:bg-navy-dark transition-colors">Let's Talk</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- Testimonials -->
-  <section class="py-20 px-6 bg-white">
+  <!-- Testimonials (moved: see neighborhoods → hear from people who live there) -->
+  <section class="py-20 px-6">
     <div class="mx-auto max-w-4xl">
-      <h2 class="text-3xl font-bold text-center mb-10">What Clients Say</h2>
+      <h2 class="reveal text-3xl font-bold text-center mb-10">What Clients Say</h2>
       <div class="grid md:grid-cols-3 gap-5">
         {TESTIMONIALS.map((t) => (
           <div class="rounded-xl border border-navy/10 bg-slate p-6">
@@ -135,6 +119,31 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
             </div>
           </div>
         ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="py-20 px-6 bg-white">
+    <div class="mx-auto max-w-4xl grid md:grid-cols-2 gap-10 items-center">
+      <img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=600&q=80" alt="Ryan Cole" class="reveal rounded-xl aspect-[4/5] object-cover" loading="lazy" />
+      <div>
+        <h2 class="reveal text-3xl font-bold mb-4">About Ryan</h2>
+        <p class="reveal delay-1 text-muted leading-relaxed mb-4">
+          I've lived in Greenville for 20 years and sold homes here for 12. I know every neighborhood, every school district, and every hidden gem. When you work with me, you get someone who knows this market — not just the data, but the feel of it.
+        </p>
+        <p class="reveal delay-2 text-muted leading-relaxed mb-4">
+          For buyers, I find homes before they hit the market. For sellers, I price right, stage smart, and close fast — average 18 days on market.
+        </p>
+        <p class="reveal delay-3 text-muted leading-relaxed mb-6">
+          I'm not a team — I'm one agent who gives every client my full attention. You'll always talk to me, never an assistant.
+        </p>
+        <div class="reveal delay-4 flex flex-wrap gap-2 mb-6">
+          <span class="rounded-full bg-navy/8 text-navy text-xs font-medium px-3 py-1.5">120+ homes sold</span>
+          <span class="rounded-full bg-navy/8 text-navy text-xs font-medium px-3 py-1.5">12 years local</span>
+          <span class="rounded-full bg-navy/8 text-navy text-xs font-medium px-3 py-1.5">18 avg days on market</span>
+        </div>
+        <a href="#contact" class="inline-block rounded-lg bg-navy px-5 py-2.5 font-medium text-white hover:bg-navy-dark transition-colors">Let's Talk</a>
       </div>
     </div>
   </section>
@@ -165,68 +174,79 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
   </section>
 
   <script>
-    // Listing expand/collapse
-    document.querySelectorAll('[data-listing-toggle]').forEach(el => {
-      el.addEventListener('click', () => {
-        const idx = (el as HTMLElement).dataset.listingToggle
-        const detail = document.querySelector(`[data-listing-detail="${idx}"]`)
-        const arrow = document.querySelector(`[data-listing-arrow="${idx}"]`)
-        if (detail) detail.classList.toggle('hidden')
-        if (arrow) arrow.classList.toggle('rotate-180')
-      })
-    })
-
     document.getElementById('contact-form')?.addEventListener('submit', (e) => {
       e.preventDefault()
       const status = document.getElementById('form-status')!
-      status.textContent = 'Thanks! We\'ll get back to you within a few hours. Looking forward to connecting.'
+      status.textContent = 'Thanks! I\'ll get back to you within a few hours. Looking forward to connecting.'
       status.className = 'rounded-lg bg-gold/20 border border-gold/30 p-3 text-center text-sm text-gold'
       ;(e.target as HTMLFormElement).querySelectorAll('input, select, textarea, button').forEach(el => (el as HTMLInputElement).disabled = true)
     })
+
+    // Animated counters
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return
+        const el = entry.target as HTMLElement
+        const target = el.dataset.value!
+        const numericPart = parseFloat(target.replace(/[^0-9.]/g, ''))
+        const suffix = target.replace(/[0-9.]/g, '')
+        const duration = 1500
+        const start = performance.now()
+        function update(now: number) {
+          const p = Math.min((now - start) / duration, 1)
+          const eased = 1 - Math.pow(1 - p, 3)
+          const current = eased * numericPart
+          el.textContent = (target.includes('.') ? current.toFixed(1) : Math.floor(current).toString()) + suffix
+          if (p < 1) requestAnimationFrame(update)
+        }
+        requestAnimationFrame(update)
+        counterObserver.unobserve(el)
+      })
+    }, { threshold: 0.5 })
+    document.querySelectorAll('.counter').forEach(el => counterObserver.observe(el))
 
     // Multi-turn AI chat
     const chatInput = document.getElementById('chat-input') as HTMLInputElement
     const chatSend = document.getElementById('chat-send')!
     const chatMessages = document.getElementById('chat-messages')!
-    let chatHistory: Array<{ role: string; content: string }> = []
+    const chatQuick = document.getElementById('chat-quick')!
+    const chatHistory: Array<{ role: string; content: string }> = []
     let chatBusy = false
 
-    function addMessage(role: string, text: string) {
+    function escapeHtml(t: string): string {
+      return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,'<br />')
+    }
+    function linkify(h: string): string {
+      h = h.replace(/\(864\)\s*555-7482/g, '<a href="tel:+18645557482" class="text-gold underline">(864) 555-7482</a>')
+      h = h.replace(/ryan@ryancolerealtor\.com/g, '<a href="mailto:ryan@ryancolerealtor.com" class="text-gold underline">ryan@ryancolerealtor.com</a>')
+      return h
+    }
+    function addMsg(role: string, text: string) {
       chatMessages.classList.remove('hidden')
-      const wrapper = document.createElement('div')
-      wrapper.className = role === 'user' ? 'flex justify-end' : 'flex justify-start'
+      const el = document.createElement('div')
+      el.className = role === 'user' ? 'flex justify-end' : 'flex justify-start'
       const bubble = document.createElement('div')
       bubble.className = role === 'user'
-        ? 'bg-navy text-white rounded-2xl rounded-br-sm px-4 py-2 max-w-[80%] text-sm'
-        : 'bg-navy/5 rounded-2xl rounded-bl-sm px-4 py-2 max-w-[80%] text-sm leading-relaxed'
-      if (role === 'assistant') {
-        let html = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
-        html = html.replace(/\((\d{3})\)\s*(\d{3})-(\d{4})/g, '<a href="tel:$1$2$3" class="underline">($1) $2-$3</a>')
-        html = html.replace(/([a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,})/g, '<a href="mailto:$1" class="underline">$1</a>')
-        bubble.innerHTML = html
-      } else {
-        bubble.textContent = text
-      }
-      wrapper.appendChild(bubble)
-      chatMessages.appendChild(wrapper)
+        ? 'bg-navy/8 text-charcoal rounded-xl rounded-tr-sm px-4 py-2.5 max-w-[80%] text-sm leading-relaxed'
+        : 'bg-slate text-charcoal rounded-xl rounded-tl-sm px-4 py-2.5 max-w-[80%] text-sm leading-relaxed'
+      bubble.innerHTML = role === 'user' ? escapeHtml(text) : linkify(escapeHtml(text))
+      el.appendChild(bubble)
+      chatMessages.appendChild(el)
       chatMessages.scrollTop = chatMessages.scrollHeight
     }
-
     function showTyping() {
       const el = document.createElement('div')
       el.id = 'typing-indicator'
       el.className = 'flex justify-start'
-      el.innerHTML = '<div class="bg-navy/5 text-muted rounded-2xl rounded-bl-sm px-4 py-2 text-sm">Checking...</div>'
+      el.innerHTML = '<div class="bg-slate rounded-xl rounded-tl-sm px-4 py-2.5"><div class="flex gap-1.5 items-center h-5"><span class="w-1.5 h-1.5 rounded-full bg-navy/30 animate-bounce"></span><span class="w-1.5 h-1.5 rounded-full bg-navy/30 animate-bounce" style="animation-delay:.15s"></span><span class="w-1.5 h-1.5 rounded-full bg-navy/30 animate-bounce" style="animation-delay:.3s"></span></div></div>'
       chatMessages.appendChild(el)
       chatMessages.scrollTop = chatMessages.scrollHeight
     }
-
-    async function sendMessage() {
-      const text = chatInput.value.trim()
+    async function sendChat(text: string) {
       if (!text || chatBusy) return
       chatBusy = true
       chatInput.value = ''
-      addMessage('user', text)
+      addMsg('user', text)
       showTyping()
       try {
         const res = await fetch('/api/chat', {
@@ -234,21 +254,24 @@ import { SITE, LISTINGS, NEIGHBORHOODS, STATS, TESTIMONIALS } from '../lib/confi
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ message: text, history: chatHistory }),
         })
-        const data = await res.json()
         document.getElementById('typing-indicator')?.remove()
-        const reply = data.reply || "Not sure — reach out and we'll get you a real answer!"
-        addMessage('assistant', reply)
+        const data = await res.json()
+        const reply = data.reply || 'Not sure — give me a call at (864) 555-7482!'
+        addMsg('assistant', reply)
         chatHistory.push({ role: 'user', content: text })
         chatHistory.push({ role: 'assistant', content: reply })
-        if (chatHistory.length > 20) chatHistory = chatHistory.slice(-20)
+        if (chatHistory.length > 20) chatHistory.splice(0, chatHistory.length - 20)
       } catch {
         document.getElementById('typing-indicator')?.remove()
-        addMessage('assistant', 'Something went wrong. Call us at (864) 555-7482!')
+        addMsg('assistant', 'Something went wrong. Call me at (864) 555-7482!')
       }
       chatBusy = false
+      chatInput.focus()
     }
-
-    chatSend.addEventListener('click', sendMessage)
-    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendMessage() })
+    chatSend.addEventListener('click', () => sendChat(chatInput.value.trim()))
+    chatInput.addEventListener('keydown', (e) => { if (e.key === 'Enter') sendChat(chatInput.value.trim()) })
+    document.querySelectorAll('.chat-q').forEach(btn => {
+      btn.addEventListener('click', () => { sendChat((btn as HTMLElement).dataset.msg!); chatQuick.remove() })
+    })
   </script>
 </Layout>

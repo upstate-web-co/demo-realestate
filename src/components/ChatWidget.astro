@@ -1,0 +1,115 @@
+---
+/**
+ * ChatWidget — floating AI chatbot for Ryan Cole Real Estate.
+ * Multi-turn conversational chat with Ryan's headshot as avatar.
+ * Person business — the agent IS the brand.
+ */
+const RYAN_AVATAR = 'https://images.unsplash.com/photo-1560250097-0b93528c311a?w=100&q=80'
+---
+
+<button id="chat-toggle" class="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-gold text-navy shadow-lg shadow-gold/25 transition-all hover:scale-105 hover:bg-gold-light hover:shadow-xl" aria-label="Chat with Ryan" aria-expanded="false">
+  <svg id="chat-icon-open" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8">
+    <path stroke-linecap="round" stroke-linejoin="round" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+  </svg>
+  <svg id="chat-icon-close" class="hidden h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+  </svg>
+</button>
+
+<div id="chat-panel" class="fixed bottom-24 right-6 z-50 hidden w-[370px] max-w-[calc(100vw-48px)] overflow-hidden rounded-2xl border border-navy/15 bg-white shadow-2xl" role="dialog" aria-label="Chat with Ryan Cole">
+  <div class="bg-navy px-4 py-3.5">
+    <div class="flex items-center gap-3">
+      <img src={RYAN_AVATAR} alt="Ryan Cole" class="h-9 w-9 rounded-full object-cover border-2 border-gold/30" />
+      <div>
+        <p class="text-sm font-semibold text-white">Ask Ryan</p>
+        <p class="text-xs text-white/60">Market, neighborhoods, listings, buying/selling</p>
+      </div>
+    </div>
+  </div>
+
+  <div id="chat-messages" class="flex h-[340px] flex-col gap-3 overflow-y-auto p-4 bg-cream">
+    <div class="flex gap-2.5 max-w-[85%]">
+      <img src={RYAN_AVATAR} alt="Ryan" class="h-7 w-7 rounded-full object-cover shrink-0 mt-1" />
+      <div class="rounded-xl rounded-tl-none bg-white border border-navy/8 px-4 py-3">
+        <p class="text-sm text-charcoal/80">Hey! I'm Ryan. Ask me about the Greenville market, neighborhoods, listings, or the buying/selling process. How can I help?</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex gap-2 border-t border-navy/8 bg-cream px-3 py-2.5 overflow-x-auto">
+    <button class="chat-quick shrink-0 rounded-full border border-gold/20 bg-gold/5 px-3 py-1.5 text-xs font-medium text-navy hover:bg-gold/15 transition-colors" data-msg="What's the market like in Greenville right now?">📊 Market</button>
+    <button class="chat-quick shrink-0 rounded-full border border-gold/20 bg-gold/5 px-3 py-1.5 text-xs font-medium text-navy hover:bg-gold/15 transition-colors" data-msg="Best neighborhoods for families?">🏘️ Areas</button>
+    <button class="chat-quick shrink-0 rounded-full border border-gold/20 bg-gold/5 px-3 py-1.5 text-xs font-medium text-navy hover:bg-gold/15 transition-colors" data-msg="I'm a first-time buyer. Where do I start?">🔑 Buying</button>
+  </div>
+
+  <div class="border-t border-navy/8 bg-white p-3">
+    <form id="chat-form" class="flex gap-2">
+      <input type="text" id="chat-input" placeholder="Ask about neighborhoods, listings, process..." maxlength="500" autocomplete="off"
+        class="flex-1 rounded-xl border border-navy/12 bg-cream px-4 py-2.5 text-sm text-charcoal placeholder-muted/50 focus:border-navy focus:outline-none transition-all" />
+      <button type="submit" class="rounded-xl bg-gold px-4 py-2.5 text-navy font-semibold transition-all hover:bg-gold-light" aria-label="Send">
+        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" /></svg>
+      </button>
+    </form>
+  </div>
+</div>
+
+<script define:vars={{ RYAN_AVATAR }}>
+  const toggle = document.getElementById('chat-toggle')
+  const panel = document.getElementById('chat-panel')
+  const iconOpen = document.getElementById('chat-icon-open')
+  const iconClose = document.getElementById('chat-icon-close')
+  const form = document.getElementById('chat-form')
+  const input = document.getElementById('chat-input')
+  const messagesEl = document.getElementById('chat-messages')
+  let isOpen = false
+  const history = []
+
+  toggle.addEventListener('click', () => {
+    isOpen = !isOpen
+    panel.classList.toggle('hidden')
+    iconOpen.classList.toggle('hidden')
+    iconClose.classList.toggle('hidden')
+    if (isOpen) input.focus()
+  })
+
+  function esc(t) { return t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/\n/g,'<br />') }
+  function link(h) {
+    h = h.replace(/\(864\)\s*555-7482/g, '<a href="tel:+18645557482" class="text-gold underline">(864) 555-7482</a>')
+    h = h.replace(/ryan@ryancolerealtor\.com/g, '<a href="mailto:ryan@ryancolerealtor.com" class="text-gold underline">ryan@ryancolerealtor.com</a>')
+    return h
+  }
+  function addMsg(text, isBot) {
+    if (isBot) {
+      const w = document.createElement('div'); w.className = 'flex gap-2.5 max-w-[85%]'
+      const av = document.createElement('img'); av.src = RYAN_AVATAR; av.alt = 'Ryan'; av.className = 'h-7 w-7 rounded-full object-cover shrink-0 mt-1'
+      const b = document.createElement('div'); b.className = 'rounded-xl rounded-tl-none bg-white border border-navy/8 px-4 py-3'
+      const p = document.createElement('p'); p.className = 'text-sm text-charcoal/80'; p.innerHTML = link(esc(text))
+      b.appendChild(p); w.appendChild(av); w.appendChild(b); messagesEl.appendChild(w)
+    } else {
+      const d = document.createElement('div'); d.className = 'max-w-[85%] self-end rounded-xl rounded-tr-none bg-navy/8 border border-navy/12 px-4 py-3'
+      const p = document.createElement('p'); p.className = 'text-sm text-charcoal'; p.textContent = text
+      d.appendChild(p); messagesEl.appendChild(d)
+    }
+    messagesEl.scrollTop = messagesEl.scrollHeight
+  }
+  function addTyping() {
+    const w = document.createElement('div'); w.id = 'typing-indicator'; w.className = 'flex gap-2.5 max-w-[85%]'
+    const av = document.createElement('img'); av.src = RYAN_AVATAR; av.alt = 'Ryan'; av.className = 'h-7 w-7 rounded-full object-cover shrink-0 mt-1'
+    const b = document.createElement('div'); b.className = 'rounded-xl rounded-tl-none bg-white border border-navy/8 px-4 py-3'
+    b.innerHTML = '<div class="flex gap-1.5 h-5 items-center"><span class="w-1.5 h-1.5 rounded-full bg-navy/30 animate-bounce"></span><span class="w-1.5 h-1.5 rounded-full bg-navy/30 animate-bounce" style="animation-delay:.15s"></span><span class="w-1.5 h-1.5 rounded-full bg-navy/30 animate-bounce" style="animation-delay:.3s"></span></div>'
+    w.appendChild(av); w.appendChild(b); messagesEl.appendChild(w); messagesEl.scrollTop = messagesEl.scrollHeight
+  }
+  async function send(text) {
+    history.push({ role: 'user', content: text }); addMsg(text, false)
+    input.value = ''; input.disabled = true; addTyping()
+    try {
+      const res = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ messages: history }) })
+      const el = document.getElementById('typing-indicator'); if (el) el.remove()
+      if (res.ok) { const d = await res.json(); const r = d.reply || 'Not sure — call me!'; history.push({ role: 'assistant', content: r }); addMsg(r, true) }
+      else addMsg('Something went wrong. Call me at (864) 555-7482.', true)
+    } catch { const el = document.getElementById('typing-indicator'); if (el) el.remove(); addMsg('Connection error. Call (864) 555-7482.', true) }
+    finally { input.disabled = false; input.focus() }
+  }
+  form.addEventListener('submit', async function(e) { e.preventDefault(); const t = input.value.trim(); if (t) await send(t) })
+  document.querySelectorAll('.chat-quick').forEach(function(b) { b.addEventListener('click', async function() { await send(b.dataset.msg) }) })
+</script>
